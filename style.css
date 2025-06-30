@@ -1,0 +1,817 @@
+/* style.css */
+
+/* --- Keyframe Animations --- */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); } /* Moves up slightly */
+    100% { transform: translateY(0px); }
+}
+
+/* --- General Body and Container Styles --- */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    /* Full page gradient background */
+    background: linear-gradient(to bottom right, #4CAF50, #2196F3);
+    background-attachment: fixed; /* Ensures gradient covers the entire viewport */
+    color: #fff; /* Default text color for the overall dark gradient */
+    font-size: 16px;
+    overflow-x: hidden; /* Prevent horizontal scroll when menu is off-screen */
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden; /* This container will no longer affect the fixed menu */
+    padding: 20px 40px;
+    box-sizing: border-box;
+}
+
+/* General button styling */
+.button {
+    display: inline-block;
+    background: #007bff; /* A default blue for general buttons */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    transition: background 0.3s ease;
+    text-decoration: none; /* Ensure buttons don't have underlines */
+}
+
+.button:hover {
+    background: #0056b3;
+    text-decoration: none;
+}
+
+/* --- Header Styles --- */
+header {
+    background: rgba(51, 51, 51, 0.85); /* Slightly transparent dark background for header */
+    color: #fff;
+    padding-top: 30px;
+    min-height: 70px;
+    border-bottom: #77aaff 3px solid;
+    position: relative; /* For positioning title/subtitle */
+    /* Adjust padding to make space for the fixed hamburger icon */
+    padding-right: 80px; /* Space for the hamburger icon on the right */
+}
+
+header .container {
+    overflow: hidden; /* Keep content within bounds */
+    display: flex; /* Use flexbox to align title/subtitle */
+    align-items: center;
+    justify-content: flex-start; /* Align title/subtitle to the left */
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+header h1 {
+    float: none; /* Remove float */
+    margin: 0;
+    line-height: 1.2; /* Adjust line height for better alignment */
+}
+
+header p {
+    float: none; /* Remove float */
+    margin-left: 20px;
+    padding-top: 0; /* No extra padding needed, flex handles alignment */
+    line-height: 1.2;
+}
+
+/* --- Universal Hamburger Menu Icon --- */
+.menu-icon {
+    display: flex; /* Always show the hamburger icon */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-sizing: border-box;
+    position: fixed; /* Fixed position relative to viewport */
+    right: 20px; /* Position in the top-right corner */
+    top: 25px;
+    cursor: pointer;
+    z-index: 1000; /* Ensure it's above everything else */
+}
+
+.menu-icon span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: #fff;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Animation for the hamburger icon when active (optional, but good UX) */
+#menu-toggle:checked + .menu-icon span:nth-child(1) {
+    transform: translateY(11px) rotate(45deg);
+}
+#menu-toggle:checked + .menu-icon span:nth-child(2) {
+    opacity: 0;
+}
+#menu-toggle:checked + .menu-icon span:nth-child(3) {
+    transform: translateY(-11px) rotate(-45deg);
+}
+
+/* Hide the default checkbox input */
+#menu-toggle {
+    display: none;
+}
+
+/* --- Universal Menu Content (The Sliding Sidebar Navigation) --- */
+.menu-content {
+    display: flex; /* Always a flex container for its internal elements */
+    flex-direction: column; /* Stack items vertically */
+    position: fixed; /* Fixed position relative to the viewport */
+    top: 0;
+    right: -300px; /* Initially off-screen to the right */
+    width: 300px; /* Width of the sidebar menu */
+    height: 100%; /* Full viewport height */
+    background-color: #333; /* Solid dark background for the menu */
+    box-shadow: -2px 0 10px rgba(0,0,0,0.5); /* Shadow on the left edge */
+    padding-top: 80px; /* Space from the top for visual balance */
+    transition: right 0.3s ease-in-out; /* Smooth slide-in/out transition */
+    z-index: 900; /* Below the hamburger icon, but above content */
+    overflow-y: auto; /* Allow scrolling if menu content is too long */
+}
+
+/* When the checkbox is checked (hamburger is clicked), slide the menu into view */
+#menu-toggle:checked ~ .menu-content {
+    right: 0; /* Slides the menu fully into view */
+}
+
+/* --- Styles for Navigation Links inside the Sidebar Menu --- */
+.menu-content nav {
+    width: 100%;
+    text-align: center; /* Center text within the nav */
+    margin-top: 0; /* Reset margins */
+    background-color: transparent; /* No extra background */
+    box-shadow: none; /* No extra shadow */
+    padding: 0;
+    float: none; /* No floats within the menu */
+}
+
+.menu-content nav ul {
+    flex-direction: column; /* Stack nav items vertically */
+    gap: 0; /* No gap between stacked links */
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+}
+
+.menu-content nav ul li {
+    width: 100%; /* Make each list item full width */
+    padding: 0; /* Reset padding */
+}
+
+.menu-content nav ul li a {
+    display: block; /* Make links take full width of list item for easy tapping */
+    padding: 15px 20px;
+    color: white;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Separator lines between nav items */
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    background-color: transparent; /* Ensure link background is transparent for menu consistency */
+    border-radius: 0; /* No rounded corners here */
+}
+
+.menu-content nav ul li:last-child a {
+    border-bottom: none; /* No border on the last item */
+}
+
+.menu-content nav ul li a:hover {
+    background-color: #555; /* Darker hover background for menu items */
+}
+
+/* Style for the "Let's Connect" button within the sidebar menu */
+.mobile-only-connect {
+    display: block; /* Always display this li within the menu */
+    margin-top: 20px; /* Space it from other links */
+    padding: 0 20px; /* Apply horizontal padding similar to a section */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.mobile-only-connect .button {
+    display: block; /* Make the button take full width within its parent */
+    width: 100%;
+    text-align: center;
+    background-color: #ff8c00; /* Orange color for emphasis */
+    color: white;
+    padding: 12px 0; /* Adjust vertical padding */
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-only-connect .button:hover {
+    background-color: #e67e00;
+}
+
+/* --- Hero Section (Intro) Styles --- */
+#intro.hero {
+    background: transparent; /* No specific background, lets body gradient show through */
+    color: #fff; /* Text color for readability on gradient */
+    padding: 80px 0;
+    text-align: center;
+    margin-bottom: 20px; /* Space from next section */
+}
+
+#intro.hero .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    text-align: left;
+}
+
+#intro.hero .intro-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+#intro.hero .intro-text {
+    flex: 2;
+    min-width: 300px;
+    padding-right: 30px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#intro.hero .intro-image {
+    flex: 1;
+    text-align: center;
+}
+
+#intro.hero h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    animation: float 3s ease-in-out infinite;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+#intro.hero .tagline {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent dark background for readability */
+    padding: 10px 20px;
+    border-radius: 8px;
+    display: inline-block;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-top: 10px;
+    animation: float 4s ease-in-out infinite;
+}
+
+#intro.hero p {
+    font-size: 1.1em;
+    max-width: 800px;
+}
+
+#intro.hero .desktop-image {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #fff;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    display: block;
+    margin: 0 auto;
+}
+
+#intro.hero .mobile-image {
+    display: none; /* Hidden on desktop, shown on mobile via media query */
+}
+
+---
+
+/* --- Section General Styles (for sections with .container class) --- */
+/* These styles create a semi-transparent card effect over the body's gradient */
+section.container {
+    padding: 40px 40px;
+    background: rgba(255, 255, 255, 0.1); /* Light transparent overlay on the gradient */
+    color: #fff; /* Default text color for sections */
+    border-radius: 10px; /* Slightly rounded corners for section containers */
+    margin-bottom: 20px; /* Space between sections */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    backdrop-filter: blur(5px); /* Optional: Adds a subtle blur effect behind the section */
+    border-bottom: none; /* Remove previous section borders as container styling handles it */
+}
+
+/* Headings for sections using the gradient overlay */
+section h2 {
+    color: #fff; /* Headings remain white for contrast */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* General paragraph text color for sections on gradient */
+section p {
+    color: #fff;
+}
+
+
+/* --- Skills Section Specific Styles --- */
+/* Skills section needs a lighter, more opaque background and dark text for readability */
+#skills.container {
+    background-color: rgba(249, 249, 249, 0.9); /* Opaque lighter background for skills */
+    color: #333; /* Darker text for the lighter background */
+    transition: background-color 0.5s ease-in-out;
+}
+
+#skills.container:hover {
+    background-color: rgba(224, 224, 224, 0.95); /* Lighter hover for skills container */
+}
+
+#skills h2 {
+    color: #333; /* Skills heading dark */
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+#skills p { /* Explicitly set skills paragraph color */
+    color: #555;
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+}
+
+.skill-category {
+    background-color: #fff; /* White background for individual skill cards */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: calc(50% - 45px);
+    min-width: 300px;
+    box-sizing: border-box;
+    text-align: center;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px);
+    background-color: #f9f9f9;
+}
+
+.skill-icon {
+    background-color: #e0f7fa;
+    color: #00bcd4;
+    border-radius: 10px;
+    padding: 15px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 15px;
+    font-size: 1.5em;
+}
+
+.skill-icon img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.skill-category h3 {
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.skill-list {
+    list-style: none;
+    padding: 0;
+}
+
+.skill-list li {
+    padding: 8px 15px;
+    margin-bottom: 5px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* --- Experience & Education Sections - Content Blocks --- */
+.job-entry, .education-entry {
+    margin-bottom: 30px;
+    border-left: 5px solid #77aaff;
+    padding-left: 15px;
+    background-color: rgba(0, 0, 0, 0.2); /* Darker transparent background for content blocks */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.job-entry h3, .education-entry h3 {
+    color: #fff;
+    margin-top: 0;
+}
+
+.job-duration {
+    font-style: italic;
+    color: #ccc; /* Lighter color for duration text on dark background */
+    margin-bottom: 10px;
+}
+
+.job-entry ul {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 15px;
+}
+
+.job-entry ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 8px;
+    color: #eee;
+}
+
+.job-entry ul li::before {
+    content: "\25B6"; /* Right-pointing triangle */
+    color: #77aaff;
+    font-size: 0.8em;
+    position: absolute;
+    left: 0;
+    top: 5px;
+}
+
+---
+
+/* --- Certifications Section --- */
+#certifications ul {
+    list-style: disc;
+    padding-left: 40px;
+    color: #fff;
+}
+
+#certifications li {
+    background-color: rgba(0, 0, 0, 0.2); /* Darker transparent background for list items */
+    margin-bottom: 8px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+---
+
+/* --- Contact Section --- */
+#contact h2 {
+    color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Heading for 'Connect with me' within the Contact section */
+#contact .social-links h3 {
+    text-align: center;
+    color: #fff;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.contact-buttons-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto 20px;
+    padding: 20px;
+    background-color: rgba(51, 51, 51, 0.85); /* Slightly transparent dark background for buttons container */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+.contact-method-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 20px;
+    background-color: #77aaff;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 150px;
+    box-sizing: border-box;
+}
+
+.contact-method-button i {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+.contact-method-button:hover {
+    background-color: #aaddff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Specific contact method button colors */
+.contact-method-button.email {
+    background-color: #D44638;
+    color: white;
+}
+.contact-method-button.email:hover {
+    background-color: #C1392A;
+}
+
+.contact-method-button.phone {
+    background-color: #28a745;
+    color: white;
+}
+.contact-method-button.phone:hover {
+    background-color: #218838;
+}
+
+.contact-method-button.show-form-button {
+    background-color: #ff8c00;
+    color: white;
+}
+.contact-method-button.show-form-button:hover {
+    background-color: #e67e00;
+}
+
+/* Updated Social Media Links Styling (integrated into contact section) */
+.social-links {
+    margin-top: 30px;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background-color: transparent; /* No extra background, lets section gradient show */
+    box-shadow: none; /* Remove any previous shadow */
+}
+
+.social-icon {
+    display: inline-block;
+    background-color: rgba(85, 85, 85, 0.7); /* Slightly transparent dark background for icons */
+    color: #fff;
+    padding: 10px 15px;
+    margin: 0 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 120px;
+    text-align: left;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icon i {
+    margin-right: 8px;
+    font-size: 1.2em;
+}
+
+/* Hover effects for specific social icons (using brand colors) */
+.social-icon.linkedin:hover {
+    background-color: #0077B5;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 119, 181, 0.4);
+}
+
+.social-icon.github:hover {
+    background-color: #333;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(51, 51, 51, 0.4);
+}
+
+.social-icon.instagram:hover {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(220, 40, 70, 0.4);
+}
+
+/* Contact Form Styles */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: rgba(51, 51, 51, 0.85); /* Slightly transparent dark background for form */
+    border-radius: 8px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #77aaff;
+    border-radius: 4px;
+    background-color: rgba(85, 85, 85, 0.7); /* Slightly transparent dark input background */
+    color: #fff;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.contact-form .button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff8c00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+.contact-form .button:hover {
+    background-color: #e67e00;
+}
+
+---
+
+/* --- Resume Download Section --- */
+/* This section uses the general `section.container` styles for its background */
+#resume-download .button {
+    padding: 15px 30px;
+    font-size: 1.2em;
+}
+
+#resume-download .button i {
+    margin-right: 10px;
+}
+
+---
+
+/* --- Footer --- */
+footer {
+    padding: 20px;
+    margin-top: 20px;
+    color: #fff;
+    background-color: rgba(51, 51, 51, 0.85); /* Slightly transparent dark background for footer */
+    text-align: center;
+}
+
+---
+
+/* --- Scroll-to-Top Button --- */
+#scrollToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #77aaff;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    transition: opacity 0.3s ease-in-out, background-color 0.3s ease;
+    opacity: 0.8;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+}
+
+#scrollToTopBtn:hover {
+    opacity: 1;
+    background-color: #5588cc;
+    transform: translateY(-2px);
+}
+
+---
+
+/* --- Mobile Responsiveness (Max-width: 768px) --- */
+/* This media query now primarily adjusts existing styles for smaller screens
+   rather than creating a separate mobile menu, as the menu is now universal. */
+@media (max-width: 768px) {
+    header {
+        padding-right: 20px; /* Less padding on mobile for hamburger */
+        padding-top: 20px;
+    }
+
+    header h1 {
+        padding-left: 20px;
+    }
+
+    header p {
+        margin-left: 10px;
+    }
+
+    /* Hamburger icon position for smaller screens if needed */
+    .menu-icon {
+        right: 20px;
+        top: 20px; /* Adjust top position for better mobile header alignment */
+    }
+
+    /* Adjust the menu content itself for smaller screens, if different from universal */
+    .menu-content {
+        width: 250px; /* Slightly narrower menu on mobile */
+        right: -250px;
+    }
+
+    #menu-toggle:checked ~ .menu-content {
+        right: 0;
+    }
+
+    /* Profile images responsive styling */
+    .desktop-image {
+        display: none; /* Hide desktop image on mobile */
+    }
+
+    .mobile-image {
+        display: block; /* Show mobile optimized image */
+        float: none;
+        margin: 0 auto 15px;
+        width: 85%; /* Make it significantly bigger on mobile */
+        max-width: 250px; /* Optional: set a max width to control size on larger tablets */
+        height: auto;
+        aspect-ratio: 1 / 1; /* Maintain aspect ratio */
+        border-radius: 0; /* Square shape for mobile image */
+        object-fit: cover;
+        border: 5px solid #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .container {
+        padding: 15px 20px;
+    }
+
+    /* Further refine contact form and social link button sizes for mobile */
+    .contact-buttons-container {
+        flex-direction: column; /* Stack buttons vertically on mobile */
+        padding: 15px;
+        gap: 10px;
+    }
+
+    .contact-method-button {
+        width: 100%; /* Make buttons full width on mobile */
+        min-width: unset;
+    }
+
+    .social-icon {
+        margin: 10px 5px;
+        padding: 8px 12px;
+        font-size: 1em;
+        min-width: unset;
+        width: calc(50% - 20px); /* Two buttons per line on mobile */
+        box-sizing: border-box;
+    }
+
+    .social-links {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .social-links h3 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
